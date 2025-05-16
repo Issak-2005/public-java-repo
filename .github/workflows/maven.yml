@@ -37,6 +37,9 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
+          
+      - name: Autobuild Java project
+        uses: github/codeql-action/autobuild@v3
 
       # If you use Gradle instead, replace with:
       # - name: Build with Gradle
