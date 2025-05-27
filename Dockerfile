@@ -8,7 +8,7 @@ COPY src /tmp/src/
 
 WORKDIR /tmp/
 
-RUN mvn package -DskipTests
+RUN mvn -B package -DskipTests
 
 #pull base image
 
