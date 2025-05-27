@@ -12,7 +12,7 @@ RUN mvn -B package -DskipTests
 
 #pull base image
 
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:8-jdk-alpine
 
 
 #expose port 8080
