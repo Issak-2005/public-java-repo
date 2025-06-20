@@ -41,7 +41,6 @@ jobs:
 
   build:
     name: Build and Package
-    needs: analyze
     runs-on: ubuntu-latest
 
     steps:
@@ -62,7 +61,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ vars.DOCKER_USERNAME }}/hello-world-py:${{github.sha}}
+          tags: ${{ vars.DOCKER_USERNAME }}/my-java-app:${{github.sha}}
   deploy:
     name: Deploy to EC2
     needs: build
@@ -77,8 +76,8 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             sudo docker pull ${{ vars.DOCKER_USERNAME }}/my-java-app:${{ github.sha }}
-            sudo docker stop hello-world || true
-            sudo docker rm hello-world || true
+            sudo docker stop my-java-app || true
+            sudo docker rm my-java-app || true
             sudo docker run -d --name hello-world -p 80:5000 ${{ vars.DOCKER_USERNAME }}/my-java-app:${{ github.sha }}
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts
