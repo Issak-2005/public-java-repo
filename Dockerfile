@@ -1,28 +1,23 @@
-# Maven build container 
-
+# Maven build container
 FROM maven:3.5.2-jdk-8-alpine AS maven_build
 
-COPY pom.xml /tmp/
+WORKDIR /build
 
-COPY src /tmp/src/
+COPY pom.xml .
+COPY src ./src
 
-WORKDIR /tmp/
+RUN mvn -B package
 
-RUN mvn -B package -DskipTests
-
-#pull base image
-
+# Runtime image
 FROM eclipse-temurin:8-jdk-alpine
 
+WORKDIR /app
 
-#expose port 8080
-EXPOSE 8080
-
-
-#copy hello world to docker image from builder image
-
+# Copy the built jar from the first stage
 COPY --from=maven_build /build/target/*.jar /app/app.jar
 
-#default command
-CMD ["java", "-jar", "/data/hello-world-0.1.0.jar"]
+# Expose application port
+EXPOSE 8080
 
+# Run the app
+CMD ["java", "-jar", "/app/app.jar"]
