@@ -85,4 +85,4 @@ jobs:
             sudo docker rm my-java-app || true
 
             # Run new container
-            sudo docker run -d --name my-java-app -p 80:5000 ${{ vars.DOCKER_USERNAME }}/my-java-app:${{ github.sha }}
+            sudo docker run -d --name my-java-app-1 -p 80:5000 ${{ vars.DOCKER_USERNAME }}/my-java-app:${{ github.sha }}
